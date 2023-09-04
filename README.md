@@ -94,7 +94,7 @@ RegioSQM is a set of Python scripts depending on
 Because MOPAC's computations typically are *the* overall
 rate-determining step in the course of a prediction, it is recommended
 to run multiple concurrently working instances of MOPAC. For Linux,
-GNU Parallel (<https://www.gnu.org/software/parallel/>) is a suitable
+([GNU Parallel](https://www.gnu.org/software/parallel/)) is a suitable
 tool for this.
 
 As an example, in Linux Debian 13/trixie, branch testing, all
@@ -103,6 +103,16 @@ dependencies can be resolved by
 ``` shell
 sudo apt-get install python3-openbabel rdkit python3-numpy parallel mopac
 ```
+
+If you already have MOPAC and optional GNU Parallel installed, the
+included `requirements.txt` resolves the dependencies for a virtual
+environment. Pending PyPi to host an openbabel interface as a release
+greater than current
+[version 3.1.1.1](https://pypi.org/project/openbabel/) (by May 23, 2020)
+and problems reported (see
+[here](https://github.com/openbabel/openbabel/issues/2408), for
+example), [openbabel-wheel](https://pypi.org/project/openbabel-wheel/)
+(by August 21, 2023) however is used.
 
 Alternatively, RDKit may be used in an instance of Anaconda
 (<https://www.anaconda.com/>), independent on an other, already existing
