@@ -1,4 +1,4 @@
-# last edit:  <2023-08-28 Mon>
+# last edit:  <2023-09-04 Mon>
 #+OPTIONS: toc:nil ^:nil
 
 #+LATEX_CLASS:  koma-article
@@ -98,9 +98,10 @@
     but often already included in scipy
     (https://scipy.org/install.html)
    + MOPAC (https://github.com/openmopac/mopac/) While the GitHub page
-     provides the most recent version of a graphical installer, the
-     program equally has been packaged for Linux distributions such as
-     Debian, Fedora.  For other distributions, check [[https://repology.org/project/mopac7/packages][repology.org]].
+     provides the most recent version of a graphical installer for
+     Windows, Mac, and Linux, the program equally has been packaged
+     for Linux distributions such as Debian, Fedora.  For other
+     distributions, check [[https://repology.org/project/mopac/packages][repology.org]].
    Because MOPAC's computations typically are /the/ overall
    rate-determining step in the course of a prediction, it is
    recommended to run multiple concurrently working instances of

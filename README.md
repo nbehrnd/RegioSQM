@@ -1,11 +1,4 @@
 
-
-
-
-
-
-
-
 # RegioSQM
 
 ## Background
@@ -93,10 +86,10 @@ RegioSQM is a set of Python scripts depending on
   (<https://numpy.org/doc/stable/user/install.html?highlight=installation>),
   but often already included in scipy (<https://scipy.org/install.html>)
 - MOPAC (<https://github.com/openmopac/mopac/>) While the GitHub page
-  provides the most recent version of a graphical installer, the program
-  equally has been packaged for Linux distributions such as Debian,
-  Fedora. For other distributions, check
-  [repology.org](https://repology.org/project/mopac7/packages).
+  provides the most recent version of a graphical installer for Windows,
+  Mac, and Linux, the program equally has been packaged for Linux
+  distributions such as Debian, Fedora. For other distributions, check
+  [repology.org](https://repology.org/project/mopac/packages).
 
 Because MOPAC's computations typically are *the* overall
 rate-determining step in the course of a prediction, it is recommended
