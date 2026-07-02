@@ -1,14 +1,14 @@
 # name:     regiosqm.py
 # edit:     2020-12-03 (YYYY-MM-DD)
-# edit:     <2024-08-28 Mon>
+# edit:     [2026-07-02 Thu]
 #
 """Define interaction and data I/O with the other scripts."""
 
 import numpy as np
 
-import protonate as prot
-import molecule_formats as molfmt
-import molecule_svg as molsvg
+from . import protonate as prot
+from . import molecule_formats as molfmt
+from . import molecule_svg as molsvg
 
 __version__ = "2.1.2"
 

@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RegioSQM"
+version = "2.1.2"
+requires-python = ">=3.13"
+authors = [
+    { name="Jan Jensen", email="hjensen@chem.ku.dk" },
+    { name="Jimmy Kromann", email="test@test.com" },
+    { name="Norwid Behrnd", email="nbehrnd@yahoo.com" },
+]
+description = "selectivity prediction of electrophilic substitutions on (hetero)aromatic compounds"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["substitution", "selectivity", "prediction", "RDKit", "MOPAC"]
+
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+
+dependencies = [
+   "numpy>=2.5.0",
+   "openbabel>=3.2.0",
+   "rdkit>=2026.3.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=4.5.1",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/nbehrnd/https://github.com/nbehrnd/RegioSQM"
+
+[project.scripts]
+regiosqm = "regiosqm.regiosqm:main"
+
+[tool.setuptools.package-data]
+#"datawarrior_clustersort" = ["docs/README.md", "tests/*.txt", "tests/*.dwar"]
+
+[tool.pytest]
+pythonpath = ["src"]
+#testpaths = ["tests"]
+#filterwarnings = ["ignore::pytest.PytestCacheWarning"]
+#markers = [
+#    "blackbox: a black-box test",
+#    "imported: a test which imports a function of the script",
+#]
+#minversion = "9"
+#log_level = "INFO"
+#strict = true
+#addopts = ["-ra"]
+
+#[tool.ruff]
+#line-length = 90
+#target-version = "py313"
+
+#[tool.ruff.lint]
+#select = ["E", "F", "I"]
+#ignore = ["E501"]
+
+#[tool.ruff.format]
+#quote-style = "double"
+#indent-style = "space"
+#skip-magic-trailing-comma = false
+
+[tool.codespell]
+skip = "*.dwar, *Molecules*.txt"
