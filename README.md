@@ -1,3 +1,20 @@
+---
+documentclass: koma-article
+header-includes:
+-
+-
+-
+-
+---
+
+
+
+
+
+
+
+
+
 # RegioSQM
 
 ## Background
@@ -222,7 +239,7 @@ some of the intermediate files.
 - To prepare MOPAC's work invoke OpenBabel and RDKit by
 
   ``` shell
-  python ../regiosqm/regiosqm.py -g example.smiles > example_intermediates.csv
+  regiosqm -g example.smiles > example_intermediates.csv
   ```
 
   to read the structures to be probed, and to *generate* MOPAC input
@@ -251,7 +268,7 @@ some of the intermediate files.
   the call of
 
   ``` shell
-  python regiosqm.py -a example.smiles example_intermediates.csv > results.txt
+  regiosqm -a example.smiles example_intermediates.csv > results.txt
   ```
 
   Based on `example.smiles` and `example_intermediates.csv`, RegioSQM

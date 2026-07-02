@@ -219,24 +219,30 @@
    file and some of the intermediate files.
 
    + To prepare MOPAC's work invoke OpenBabel and RDKit by
+
      #+BEGIN_SRC shell
-       python ../regiosqm/regiosqm.py -g example.smiles > example_intermediates.csv
+       regiosqm -g example.smiles > example_intermediates.csv
      #+END_SRC
+
      to read the structures to be probed, and to /generate/ MOPAC
      input files about the charged regioisomers.  The input file,
      =example.smiles= is a space separated ASCII list in the format of
+
      #+BEGIN_SRC
        comp402  c1c(n(cc1)C1COC1)C=O
        comp437  c1ccc(o1)Sc1ccccc1
      #+END_SRC
+
      File =example_intermediates.csv= assists RegioSQM's bookkeeping
      the different regioisomers of the protonated intermediates.
 
    + MOPAC's computation is /the/ overall rate determining step in
      RegioSQM's work.  Assuming you have access to GNU Parallel,
+
      #+BEGIN_SRC shell
        ls *.mop | parallel -j4 "mopac {}"
      #+END_SRC
+
      distributes the initiate up to four concurrent processes (=-j4=).
      Adjust this parameter if the computer used has a different number
      of CPUs at disposition.  If MOPAC was not installed in the
@@ -245,17 +251,21 @@
 
    + After completion of MOPAC's computation, the results are
      /analyzed/ by the call of
+
      #+BEGIN_SRC shell
-       python regiosqm.py -a example.smiles example_intermediates.csv > results.txt
+       regiosqm -a example.smiles example_intermediates.csv > results.txt
      #+END_SRC
+
      Based on =example.smiles= and =example_intermediates.csv=,
      RegioSQM recapitulates the sites predicted as most susceptible to
      the EAS in =results.txt=, a three column ASCII table in the
      following format:
+
      #+BEGIN_SRC
        comp402 4 0,4
        comp437 0 0
      #+END_SRC
+
      After the name of the compound, the second colon lists the sites
      predicted as highly susceptible to the EAS reaction.  Per input
      structure, this is the globally most favorable site, and any
