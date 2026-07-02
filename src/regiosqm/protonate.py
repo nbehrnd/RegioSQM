@@ -12,10 +12,8 @@ from rdkit.Chem import AllChem
 # __rxn1__ = AllChem.ReactionFromSmarts('[C;H1:1]=[C,N;H1:2]>>[CH2:1][*H+:2]')
 # __rxn2__ = AllChem.ReactionFromSmarts('[C;H1:1]=[C,N;H0:2]>>[CH2:1][*+;H0:2]')
 
-__rxn1__ = AllChem.ReactionFromSmarts(
-    '[C;R;H1:1]=[C,N;R;H1:2]>>[CH2:1][*H+:2]')
-__rxn2__ = AllChem.ReactionFromSmarts(
-    '[C;R;H1:1]=[C,N;R;H0:2]>>[CH2:1][*+;H0:2]')
+__rxn1__ = AllChem.ReactionFromSmarts("[C;R;H1:1]=[C,N;R;H1:2]>>[CH2:1][*H+:2]")
+__rxn2__ = AllChem.ReactionFromSmarts("[C;R;H1:1]=[C,N;R;H0:2]>>[CH2:1][*+;H0:2]")
 
 # Bromine
 # __rxn1__ = AllChem.ReactionFromSmarts('[C;R;H1:1]=[C,N;R;H1:2]>>[CH:1](Br)[*H+:2]')
@@ -33,13 +31,13 @@ def generate_charged_smiles(smiles, name):
 
     m = Chem.MolFromSmiles(smiles)
 
-    aromatic_ch = m.GetSubstructMatches(Chem.MolFromSmarts('[c;H1]'))
+    aromatic_ch = m.GetSubstructMatches(Chem.MolFromSmarts("[c;H1]"))
     aromatic_ch = [element for tupl in aromatic_ch for element in tupl]
 
     Chem.Kekulize(m, clearAromaticFlags=True)
 
     # target = Chem.MolFromSmarts('[C;H1:1]=[C,N;H1:2]')
-    target = Chem.MolFromSmarts('[C;R;H1:1]=[C,N;R;H1:2]')
+    target = Chem.MolFromSmarts("[C;R;H1:1]=[C,N;R;H1:2]")
     atoms = m.GetSubstructMatches(target)
 
     # convert tuple of tuple to one-dimensional list
@@ -48,7 +46,7 @@ def generate_charged_smiles(smiles, name):
     parent = Chem.MolToSmiles(m)
 
     i = 0
-    ps = __rxn1__.RunReactants((m, ))
+    ps = __rxn1__.RunReactants((m,))
     for x in ps:
         smiles = Chem.MolToSmiles(x[0])
         smiles = smiles.replace("NH2+", "N+")
@@ -60,11 +58,11 @@ def generate_charged_smiles(smiles, name):
 
     isav = i
     # target = Chem.MolFromSmarts('[C;H1:1]=[C,N;H0:2]')
-    target = Chem.MolFromSmarts('[C;R;H1:1]=[C,N;R;H0:2]')
+    target = Chem.MolFromSmarts("[C;R;H1:1]=[C,N;R;H0:2]")
     atoms = m.GetSubstructMatches(target)
     atoms = [element for tupl in atoms for element in tupl]
 
-    ps = __rxn2__.RunReactants((m, ))
+    ps = __rxn2__.RunReactants((m,))
     for x in ps:
         smiles = Chem.MolToSmiles(x[0])
         smiles = smiles.replace("NH2+", "N+")
@@ -78,7 +76,7 @@ def generate_charged_smiles(smiles, name):
 
 
 def protonate_smiles(filename):
-    """ read smiles filename in the format
+    """read smiles filename in the format
     <compound name> <smiles>
     from filename
 

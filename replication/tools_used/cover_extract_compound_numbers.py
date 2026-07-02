@@ -2,11 +2,11 @@
 # author:  nbehrnd@yahoo.com
 # license: 2020, MIT
 # date:    2020-09-24 (YYYY-MM-DD)
-# edit:    2020-10-14 (YYYY-MM-DD)
+# edit:    [2026-07-02 Thu]
 
 """Apply script 'extract_compound_numbers.py' on all EAS groups.
 
-This is a moderator scrpt for script 'extract_compound_numbers.py',
+This is a moderator script for script 'extract_compound_numbers.py',
 to yield the compound numbers of all 69 EAS groups.  To be run from
 the CLI of Python 3 by
 

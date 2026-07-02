@@ -27,27 +27,30 @@ import regiosqm
 
 def get_args():
     """Provide a minimal menu to the CLI."""
-    parser = argparse.ArgumentParser(
-        description='Moderator script for regiosqm.')
+    parser = argparse.ArgumentParser(description="Moderator script for regiosqm.")
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        help='Process all _smiles.csv files in the current folder.')
+        "-a",
+        "--all",
+        action="store_true",
+        help="Process all _smiles.csv files in the current folder.",
+    )
 
     group.add_argument(
-        '-s',
-        '--smiles',
+        "-s",
+        "--smiles",
         default="",
-        help='Process only one manually given single SMILES string.')
+        help="Process only one manually given single SMILES string.",
+    )
 
-    group.add_argument('files',
-                       metavar='FILE(S)',
-                       nargs='*',
-                       default=[],
-                       help='Manual input of .smi file(s) to process.')
+    group.add_argument(
+        "files",
+        metavar="FILE(S)",
+        nargs="*",
+        default=[],
+        help="Manual input of .smi file(s) to process.",
+    )
 
     return parser.parse_args()
 
@@ -113,7 +116,7 @@ def characterize_scrutiny(entry="", input_file=""):
     aromatic substitution.  Thus, the versions of the script's tools
     are permanently recorded."""
 
-    parameter_log = ''.join([entry, "_parameter.log"])
+    parameter_log = "".join([entry, "_parameter.log"])
 
     # Retrieve the version of MOPAC from a MOPAC .out file.
     for file in os.listdir("."):
@@ -157,11 +160,9 @@ def space_cleaning(entry="", input_file="", conf_file="", result=""):
     deposit = str(entry).split("_smiles")[0]
     os.mkdir(deposit)
 
-    parameter_log = ''.join([deposit, "_parameter.log"])
+    parameter_log = "".join([deposit, "_parameter.log"])
 
-    move_by_extension = [
-        ".arc", ".den", ".end", ".mop", ".out", ".res", ".sdf", ".svg"
-    ]
+    move_by_extension = [".arc", ".den", ".end", ".mop", ".out", ".res", ".sdf", ".svg"]
     move_per_run = [input_file, conf_file, result, parameter_log]
     to_move = move_by_extension + move_per_run
     for element in to_move:

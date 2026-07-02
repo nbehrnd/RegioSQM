@@ -3,10 +3,10 @@
 #
 """Prepare RDKit to generate .svg files after MOPAC's work.
 
-    The script was adjusted for compatibility with Python 3 (3.8.4rc1)
-    backed by RDKit (release 2019.9) in mind.  Do not use it with now
-    legacy Python 2.7.17 (which would require RDKit prior release
-    2019.3)."""
+The script was adjusted for compatibility with Python 3 (3.8.4rc1)
+backed by RDKit (release 2019.9) in mind.  Do not use it with now
+legacy Python 2.7.17 (which would require RDKit prior release
+2019.3)."""
 
 # rdkit
 from rdkit import Chem
@@ -15,11 +15,13 @@ from rdkit.Chem import Draw
 
 def create_svg(rdkitmol, highlights=None):
     """Define parameters per .svg file."""
-    img = Draw.MolsToGridImage([rdkitmol],
-                               molsPerRow=1,
-                               subImgSize=(400, 400),
-                               useSVG=True,
-                               highlightAtomLists=[highlights])
+    img = Draw.MolsToGridImage(
+        [rdkitmol],
+        molsPerRow=1,
+        subImgSize=(400, 400),
+        useSVG=True,
+        highlightAtomLists=[highlights],
+    )
     svg = img
     # svg = img.data
     svg = svg.replace("xmlns:svg", "xmlns")
@@ -35,10 +37,10 @@ def get_highlights(svg, measured=False):
     for line in svg:
         if "ellipse" in line:
             if measured:
-                line = line.replace('fill:#FF7F7F', 'fill:none')
-                line = line.replace('stroke-width:1px;', 'stroke-width:6px;')
+                line = line.replace("fill:#FF7F7F", "fill:none")
+                line = line.replace("stroke-width:1px;", "stroke-width:6px;")
             else:
-                line = line.replace('stroke-width:1px;', 'stroke-width:0;')
+                line = line.replace("stroke-width:1px;", "stroke-width:0;")
 
             highlights.append(line)
 
@@ -61,9 +63,8 @@ def pretty_svg(svg):
 
             # Add border to text
             border_text = line
-            border_text = border_text.replace('stroke:none;', '')
-            border_text = border_text.replace(replacetext,
-                                              borderline + replacetext)
+            border_text = border_text.replace("stroke:none;", "")
+            border_text = border_text.replace(replacetext, borderline + replacetext)
 
             svg[i] = border_text + "\n" + line
 
@@ -72,7 +73,7 @@ def pretty_svg(svg):
         if "path" in line:
 
             # thicker lines
-            line = line.replace('stroke-width:2px', 'stroke-width:3px')
+            line = line.replace("stroke-width:2px", "stroke-width:3px")
             svg[i] = line
 
     svg = "\n".join(svg)
@@ -133,21 +134,20 @@ def generate_structure(smiles, predicted, highlight_measure=None):
 
     # did threshold find some predictions?
     # find ones not in predicted list
-    highlight_loseicted = list(
-        set(highlight_loseicted) - set(highlight_predicted))
+    highlight_loseicted = list(set(highlight_loseicted) - set(highlight_predicted))
 
     if highlight_loseicted is not None:
         svg_loseicted = create_svg(m, highlights=highlight_loseicted)
         highlights_loseicted = get_highlights(svg_loseicted)
         highlights_loseicted = [
-            el.replace("#FF7F7F", color_loseicted)
-            for el in highlights_loseicted
+            el.replace("#FF7F7F", color_loseicted) for el in highlights_loseicted
         ]
     else:
         highlights_loseicted = []
 
     svg = merge_svg(
-        base, highlights_loseicted + highlights_predicted + highlights_measure)
+        base, highlights_loseicted + highlights_predicted + highlights_measure
+    )
     svg = pretty_svg(svg)
 
     return svg
@@ -202,5 +202,9 @@ if __name__ == "__main__":
     highlight_loseicted = [1, 5, 10, 14]
 
     print(
-        generate_structure(smiles, [highlight_predicted, highlight_loseicted],
-                           highlight_measure=highlight_measure))
+        generate_structure(
+            smiles,
+            [highlight_predicted, highlight_loseicted],
+            highlight_measure=highlight_measure,
+        )
+    )

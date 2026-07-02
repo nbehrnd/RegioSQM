@@ -15,4 +15,3 @@
 # conversion instead.
 
 pandoc -s README.org -t gfm -o README.md
-

@@ -33,7 +33,7 @@ change.,,,,,,,,,,,
 "the SI of the seminal publication.",,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
-"EAS group",".zip size","unziped folder",,files,substrates,identifier,"result vs. SI","locate change","prediction is","compared to experiment",
+"EAS group",".zip size","unzipped folder",,files,substrates,identifier,"result vs. SI","locate change","prediction is","compared to experiment",
 ,,"du -h","du -h --apparent-size",,,,,,,,
 ,,,,,,,,,,,
 EAS_01,218KiB,820K,576K,109,1,comp402,different,"Previously red-0 drops out.","more strict",better,
@@ -70,7 +70,7 @@ EAS_02,39.1MiB,87M,74M,7501,28,comp434,same,,,,
 EAS_03,5.9MiB,13M,11M,1035,4,comp413,same,,,,
 ,,,,,,comp586,same,,,,
 ,,,,,,comp588,same,,,,
-,,,,,,comp587,same,,,,"i.e., still contrary to experiment prefering EAS on the inner over on the outer thiophene"
+,,,,,,comp587,same,,,,"i.e., still contrary to experiment preferring EAS on the inner over on the outer thiophene"
 ,,,,,,,,,,,
 EAS_04,23.7MiB,59M,50,5697,20,comp1,same,,,,
 ,,,,,,comp2,same,,,,
@@ -300,8 +300,8 @@ EAS_12,116MiB,233MB,201MB,16688,61,comp21,same,,,,
 ,,,,,,comp219,same,,,,
 ,,,,,,comp220,same,,,,
 ,,,,,,comp235,same,,,,
-,,,,,,comp245,same,,,,"Prediction still prefers the reaction on the furane instead of the the observed reactin in pridindine"
-,,,,,,comp246,same,,,,"Prediction still prefers the reaction on the furane instead of the the observed reactin in pridindine"
+,,,,,,comp245,same,,,,"Prediction still prefers the reaction on the furane instead of the the observed reaction in pridindine"
+,,,,,,comp246,same,,,,"Prediction still prefers the reaction on the furane instead of the the observed reaction in pridindine"
 ,,,,,,comp251,different,"complicated picture, possibly suggesting the discern is less strict","less strict",worse,"Prediction still prefers the reaction on the benzenes rather than on the black-marked pyridine.  Check again for this reaction, a nitro-pyridine feels even farther away to an EAS than pyridine alone."
 ,,,,,,,,,,,
 ,,,,,,comp254,same,,,,"Prediction still prefers the 3 instead of the 2 position to pyridine-N."

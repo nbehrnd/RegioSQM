@@ -1,3 +1,0 @@
-numpy>=1.24.2
-openbabel-wheel==3.1.1.17
-rdkit>=2022.09.3

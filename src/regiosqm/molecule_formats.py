@@ -2,6 +2,7 @@
 # edit:  2020-07-15 (YYYY-MM-DD)
 #
 """Define data transfer among terminal / file SMILES, openbabel, RDKit, MOPAC."""
+
 import re
 import subprocess
 
@@ -13,17 +14,18 @@ from rdkit.Chem import rdMolDescriptors
 def shell(cmd, shell=False):
     """Define data input from either CLI or input file."""
     if shell:
-        p = subprocess.Popen(cmd,
-                             shell=True,
-                             stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = subprocess.Popen(
+            cmd,
+            shell=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
     else:
         cmd = cmd.split()
-        p = subprocess.Popen(cmd,
-                             stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
+        p = subprocess.Popen(
+            cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
 
     output, err = p.communicate()
     return output
@@ -37,10 +39,9 @@ def generate_conformations_sdf(smiles, name, max_conf=20):
 
     confs = min(1 + 3 * rot_bond, max_conf)
 
-    AllChem.EmbedMultipleConfs(m,
-                               numConfs=confs,
-                               useExpTorsionAnglePrefs=True,
-                               useBasicKnowledge=True)
+    AllChem.EmbedMultipleConfs(
+        m, numConfs=confs, useExpTorsionAnglePrefs=True, useBasicKnowledge=True
+    )
 
     conf_list = []
 
@@ -57,17 +58,15 @@ def generate_conformations_sdf(smiles, name, max_conf=20):
     return conf_list
 
 
-def convert_sdf_mop(sdf_file,
-                    mop_file,
-                    charge=1,
-                    header="pm3 charge={} eps=4.8 cycles=200"):
+def convert_sdf_mop(
+    sdf_file, mop_file, charge=1, header="pm3 charge={} eps=4.8 cycles=200"
+):
     """Define MOPAC input files."""
     header = header.format(str(charge))
 
     shell('echo "' + header + '" > ' + mop_file, shell=True)
     # TODO read babel from settings.ini
-    shell('obabel -isdf ' + sdf_file + ' -omop -xf "" >> ' + mop_file,
-          shell=True)
+    shell("obabel -isdf " + sdf_file + ' -omop -xf "" >> ' + mop_file, shell=True)
 
     return
 
@@ -85,10 +84,7 @@ def generate_conformations_files(smiles, name, charge, max_conf=20, header=""):
             convert_sdf_mop(x + ".sdf", x + ".mop", charge=charge + 1)
 
         else:
-            convert_sdf_mop(x + ".sdf",
-                            x + ".mop",
-                            header=header,
-                            charge=charge + 1)
+            convert_sdf_mop(x + ".sdf", x + ".mop", header=header, charge=charge + 1)
 
     return conformations
 
@@ -97,7 +93,7 @@ def convert_mop_sdf(outfile, sdffile):
     """Write .sdf based on MOPAC's .out files."""
     obabel = "obabel"
 
-    shell(obabel + ' -imopout ' + outfile + ' -osdf > ' + sdffile, shell=True)
+    shell(obabel + " -imopout " + outfile + " -osdf > " + sdffile, shell=True)
 
     return
 
@@ -108,7 +104,7 @@ def get_bonds(sdf_file):
     atoms = 0
     bond_list = []
 
-    searchlines = open(sdf_file, 'r').readlines()
+    searchlines = open(sdf_file, "r").readlines()
 
     for i, line in enumerate(searchlines):
         words = line.split()  # split line into words
