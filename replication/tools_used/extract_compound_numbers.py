@@ -61,7 +61,7 @@ def read_compounds_smiles():
         with open("compounds_smiles.csv", mode="r") as source:
             for line in source:
                 line = str(line).strip()
-                retain = ' '.join(line.split()[:2])
+                retain = " ".join(line.split()[:2])
                 reference_register.append(retain)
 
     except IOError:
@@ -79,7 +79,7 @@ def identify_interesting_smiles():
             compound_number = str(line).strip()
             compound_number = compound_number.split()[0]
 
-            compound_string = ''.join(['comp', compound_number, ' '])
+            compound_string = "".join(["comp", compound_number, " "])
             check_register.append(compound_string)
 
     # check against the reference file:
@@ -94,7 +94,7 @@ def identify_interesting_smiles():
 
 def report_writer():
     """Provide the permanent record, the input file for RegioSQM."""
-    output_file = ''.join([str(sys.argv[1])[:-4], "_smiles.csv"])
+    output_file = "".join([str(sys.argv[1])[:-4], "_smiles.csv"])
 
     try:
         with open(output_file, mode="w") as newfile:
@@ -116,12 +116,14 @@ parser = argparse.ArgumentParser(
     pdftotext [benzenes.pdf], to write [benzene.txt] which is the
     input file for this script.  To work, file 'compounds_smiles.csv'
     must reside in the same folder as this script and the input
-    file.""")
+    file."""
+)
 
 parser.add_argument(
-    'inputfile',
-    type=argparse.FileType('r'),
-    help='mandatory input, typically [compounds.txt] by pdftotxt')
+    "inputfile",
+    type=argparse.FileType("r"),
+    help="mandatory input, typically [compounds.txt] by pdftotxt",
+)
 
 args = parser.parse_args()
 

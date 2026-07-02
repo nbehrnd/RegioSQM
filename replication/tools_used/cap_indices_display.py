@@ -26,8 +26,10 @@ import subprocess as sub
 import sys
 
 from rdkit import Chem
+
 # from rdkit.Chem import rdDepictor
 from rdkit.Chem import Draw
+
 # from rdkit.Chem.Draw import rdMolDraw2D
 # from IPython.display import SVG
 from rdkit.Chem import AllChem
@@ -45,8 +47,10 @@ def file_read():
                 # write the intermediate .sdf file:
                 try:
                     command = str(
-                        "obabel -:'{}' -osdf --addtotitle {} -: >> a.sdf".
-                        format(smiles, label))
+                        "obabel -:'{}' -osdf --addtotitle {} -: >> a.sdf".format(
+                            smiles, label
+                        )
+                    )
                     sub.call(command, shell=True)
                 except IOError:
                     print("Generation of intermediate 'a.sdf' failed.  Exit.")
@@ -60,7 +64,7 @@ def file_read():
 def illustrate_atomIndices():
     """Read intermediate a.sdf to illustrate the indices in a .svg."""
     # illustrate RDKit's atom indices attributed:
-    suppl = Chem.SDMolSupplier('a.sdf')
+    suppl = Chem.SDMolSupplier("a.sdf")
     ms = [x for x in suppl if x is not None]
 
     for m in ms:
@@ -70,17 +74,19 @@ def illustrate_atomIndices():
         for atom in m.GetAtoms():
             atom.SetAtomMapNum(atom.GetIdx())
 
-    img = Draw.MolsToGridImage(ms,
-                               molsPerRow=4,
-                               subImgSize=(200, 200),
-                               legends=[x.GetProp("_Name") for x in ms],
-                               useSVG=True)
+    img = Draw.MolsToGridImage(
+        ms,
+        molsPerRow=4,
+        subImgSize=(200, 200),
+        legends=[x.GetProp("_Name") for x in ms],
+        useSVG=True,
+    )
 
     # test pad:
     # img.save("test.png")  # this requires img be set to useSVG=False
 
     output_file = str(sys.argv[1]).split("_smiles")[0]
-    output_file = ''.join([output_file, '_atomIndicesCap.svg'])
+    output_file = "".join([output_file, "_atomIndicesCap.svg"])
     with open(output_file, mode="w") as newfile:
         newfile.write(str(img))
 
@@ -96,9 +102,10 @@ parser = argparse.ArgumentParser(description="""
     'benzenes_atomIndices.svg'.""")
 
 parser.add_argument(
-    'inputfile',
-    type=argparse.FileType('r'),
-    help='a SMILES attributed EAS compound list, e.g. benzenes_smiles.csv')
+    "inputfile",
+    type=argparse.FileType("r"),
+    help="a SMILES attributed EAS compound list, e.g. benzenes_smiles.csv",
+)
 args = parser.parse_args()
 # clarifications for argparse, end.
 

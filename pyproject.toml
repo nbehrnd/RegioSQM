@@ -88,4 +88,4 @@ pythonpath = ["src"]
 #skip-magic-trailing-comma = false
 
 [tool.codespell]
-skip = "*.dwar, *Molecules*.txt"
+skip = "*.svg"

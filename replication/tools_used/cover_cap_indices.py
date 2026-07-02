@@ -10,7 +10,7 @@ This moderator script applies 'cap_indices_display.py' on all SMILES
 string lists present in the current folder to provide each of them
 the illustration of RDKit's attributed atom indices in a .svg file.
 
-Launch from the CLI of Python3 by 
+Launch from the CLI of Python3 by
 
 python cover_cap_indices.py
 

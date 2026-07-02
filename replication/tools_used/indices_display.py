@@ -69,13 +69,10 @@ def draw_multiple_mol(smiles_list, mols_per_row=4, file_path=None):
 
     mols_per_row = min(len(smiles_list), mols_per_row)
 
-    img = Draw.MolsToGridImage(mols,
-                               molsPerRow=4,
-                               subImgSize=(200, 200),
-                               useSVG=True)
+    img = Draw.MolsToGridImage(mols, molsPerRow=4, subImgSize=(200, 200), useSVG=True)
     if file_path:
         try:
-            with open(file_path, 'w') as f_handle:
+            with open(file_path, "w") as f_handle:
                 f_handle.write(img.data)
             print("File '{}' was written.".format(file_path))
         except IOError:
@@ -91,9 +88,10 @@ parser = argparse.ArgumentParser(description="""
     'benzenes_atomIndices.svg'.""")
 
 parser.add_argument(
-    'inputfile',
-    type=argparse.FileType('r'),
-    help='a SMILES attributed EAS compound list, e.g. benzenes_smiles.csv')
+    "inputfile",
+    type=argparse.FileType("r"),
+    help="a SMILES attributed EAS compound list, e.g. benzenes_smiles.csv",
+)
 args = parser.parse_args()
 # clarifications for argparse, end.
 

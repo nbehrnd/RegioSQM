@@ -12,7 +12,7 @@ faster than this one but this interacts well enough with the Python
 environment already used here.  Typically, RDKit's .svg formulae are
 reduced to about half of their original size without noticeable damage
 to the representation when displayed in Firefox or inkview / Inkscape.
-Scour is hosted at https://github.com/scour-project/scour """
+Scour is hosted at https://github.com/scour-project/scour"""
 
 import os
 import shutil
@@ -27,7 +27,7 @@ register.sort()
 
 for entry in register:
     INPUT = entry
-    INTERMEDIATE = ''.join([entry, 'a'])
+    INTERMEDIATE = "".join([entry, "a"])
     OUTPUT = entry
 
     # optimization of the file

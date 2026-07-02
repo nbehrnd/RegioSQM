@@ -1,14 +1,14 @@
 # name: README_replication.txt
 # date: 2020-09-24 (YYYY-MM-DD)
-# edit: 2020-10-12 (YYYY-MM-DD)
+# edit: [2026-07-02 Thu]
 
 The purpose of this folder is to store the more important input and
 output data replicating the analysis performed to provide the SI of
 RegioSQM's publication.  Changes in the code may alter the results,
 and thus, the predicted sites for an EAS to occur.  Because a local
-installation of RegioSQM offers the output both as an illustration 
+installation of RegioSQM offers the output both as an illustration
 (a .svg file per EAS group) as well as a plain text table, these
-could be idenitified rapidly by a diff view of the relevant files.
+could be identified rapidly by a diff view of the relevant files.
 
 The first check run the scripts for RegioSQM 2.0.0 beta to use current
 Python 3.8.6rc1 (Sep 14, 2020), OpenBabel 3.1.0 (Jun 9, 2020), and
@@ -42,5 +42,5 @@ Sub folder
   compound numbers, the SMILES strings, the atom indices.
 
 END
-  
-  the Python scripts used to extract the compound 
+
+  the Python scripts used to extract the compound
