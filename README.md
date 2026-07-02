@@ -1,20 +1,3 @@
----
-documentclass: koma-article
-header-includes:
--
--
--
--
----
-
-
-
-
-
-
-
-
-
 # RegioSQM
 
 ## Background
