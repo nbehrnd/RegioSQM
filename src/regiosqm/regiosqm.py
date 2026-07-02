@@ -10,7 +10,7 @@ from . import protonate as prot
 from . import molecule_formats as molfmt
 from . import molecule_svg as molsvg
 
-__version__ = "2.1.2"
+__version__ = "3.0.0-alpha.1"
 
 
 def analyse_results(smiles_filename, conf_filename, test_exam=False):
