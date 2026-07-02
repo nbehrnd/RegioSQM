@@ -1,4 +1,3 @@
-
 # RegioSQM
 
 ## Background
@@ -27,7 +26,7 @@ For a given substrate, RegioSQM probes any (hetero)aromatic position
 each position, the heat of formation of this intermediate is computed.
 As for pyrazole (**1**, line a), for example,
 
-![](./doc_support/figure_1_050.png)
+![](./docs/figure_1_050.png)
 
 protonation in the 4-position yields the least endothermic charged
 regioisomer (169.4 kcal/mol, if computed at the level of PM3/COSMO)[^3]
@@ -65,14 +64,14 @@ deployed (PM3/COSMO instead of DFT) to predict rapidly the sites of the
 EAS reaction. Depending on the threshold used, the rate of success
 within the test set of 535 substrates equals to 92% or 96%.
 
-![](./doc_support/figure_4_050.png)
+![](./docs/figure_4_050.png)
 
 Data in subfolder `replication` permit a replication of this prediction
 for 535 substrates obtained by permutation of 69 mono- and bicyclic
 (hetero)aromatic core structures with the substituents like those
 depicted below:
 
-![](./doc_support/figure_3_050.png)
+![](./docs/figure_3_050.png)
 
 # Local use
 
@@ -97,22 +96,17 @@ to run multiple concurrently working instances of MOPAC. For Linux,
 ([GNU Parallel](https://www.gnu.org/software/parallel/)) is a suitable
 tool for this.
 
-As an example, in Linux Debian 13/trixie, branch testing, all
-dependencies can be resolved by
+As an example, in Linux Debian 13/trixie, branch testing, all essential
+dependencies *of this script* can be resolved by running
 
 ``` shell
-sudo apt-get install python3-openbabel rdkit python3-numpy parallel mopac
+pip install .
 ```
 
-If you already have MOPAC and optional GNU Parallel installed, the
-included `requirements.txt` resolves the dependencies for a virtual
-environment. Pending PyPi to host an openbabel interface as a release
-greater than current
-[version 3.1.1.1](https://pypi.org/project/openbabel/) (by May 23, 2020)
-and problems reported (see
-[here](https://github.com/openbabel/openbabel/issues/2408), for
-example), [openbabel-wheel](https://pypi.org/project/openbabel-wheel/)
-(by August 21, 2023) however is used.
+after fetching a copy of the repository from GitHub.
+
+MOPAC and optional GNU Parallel are external dependencies *for the
+intended analysis*, not for running the script itself.
 
 Alternatively, RDKit may be used in an instance of Anaconda
 (<https://www.anaconda.com/>), independent on an other, already existing
@@ -307,7 +301,7 @@ definitively worse (22) are scattered over multiple EAS classes. For
     in MOPAC is described in its
     [manual](http://openmopac.net/manual/cosmo.html). By default,
     computations by RegioSQM are performed with MOPAC's implicit
-    effective van der Waals radius of the solvent of 1.3 Å and an
+    effective van der Waals radius of the solvent of 1.3  and an
     explicitly defined dielectric constant of 4.8 (chloroform, script
     `molecule_formats.py`).
 
@@ -322,7 +316,7 @@ definitively worse (22) are scattered over multiple EAS classes. For
     in MOPAC is described in its
     [manual](http://openmopac.net/manual/cosmo.html). By default,
     computations by RegioSQM are performed with MOPAC's implicit
-    effective van der Waals radius of the solvent of 1.3 Å and an
+    effective van der Waals radius of the solvent of 1.3  and an
     explicitly defined dielectric constant of 4.8 (chloroform, script
     `molecule_formats.py`).
 
