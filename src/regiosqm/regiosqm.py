@@ -1,6 +1,6 @@
 # name:     regiosqm.py
 # edit:     2020-12-03 (YYYY-MM-DD)
-# edit:     [2026-07-02 Thu]
+# edit:     [2026-07-06 Mon]
 #
 """Define interaction and data I/O with the other scripts."""
 
@@ -250,7 +250,7 @@ def main():
         "--generate_conformations",
         action="store",
         metavar="smiles_filename",
-        help="",
+        help="For instance `regiosqm -g input.smi > conformers.csv`",
     )
     parser.add_argument(
         "-a",
@@ -258,7 +258,7 @@ def main():
         nargs=2,
         action="store",
         metavar="smiles_filename",
-        help="",
+        help="For instance `regiosqm -a input.smi conformers.csv > results.csv`",
     )
 
     parser.add_argument(
@@ -268,7 +268,7 @@ def main():
         type=int,
         metavar="N",
         default=20,
-        help="Max conformations to find for each protonation",
+        help="Max conformations to find for each protonation (default: 20)",
     )
 
     parser.add_argument(
