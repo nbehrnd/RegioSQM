@@ -8,8 +8,10 @@ version = "3.0.0-alpha.1"
 requires-python = ">=3.10"
 authors = [
     { name="Jan Jensen", email="hjensen@chem.ku.dk" },
-    { name="Jimmy Kromann", email="test@test.com" },
-    { name="Norwid Behrnd", email="nbehrnd@yahoo.com" },
+    { name="Jimmy Kromann" },
+]
+maintainers = [
+    { name="Norwid Behrnd", email="nbehrnd@yahoo.com"},
 ]
 description = "selectivity prediction of electrophilic substitutions on (hetero)aromatic compounds"
 readme = "README.md"
