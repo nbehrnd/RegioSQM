@@ -73,208 +73,184 @@ depicted below:
 
 ![](./docs/figure_3_050.png)
 
-# Local use
+# Proposed deployment
 
 ## Local installation
 
-RegioSQM is a set of Python scripts depending on
+The overall analysis depends on the freely available opensource
+[MOPAC](https://openmopac.net/) to perform quantum chemical
+computations. Its [download page](https://openmopac.net/download/)
+provides installers for Linux, Mac, and Windows. You may consult
+[repology.org](https://repology.org/project/mopac/packages) to check if
+your distribution provides a package (example [Linux
+Debian](https://tracker.debian.org/pkg/mopac)), too.
 
-- OpenBabel (<https://github.com/openbabel/openbabel/releases>)
-- RDKit (<http://www.rdkit.org/docs/Install.html>)
-- numpy
-  (<https://numpy.org/doc/stable/user/install.html?highlight=installation>),
-  but often already included in scipy (<https://scipy.org/install.html>)
-- MOPAC (<https://github.com/openmopac/mopac/>) While the GitHub page
-  provides the most recent version of a graphical installer for Windows,
-  Mac, and Linux, the program equally has been packaged for Linux
-  distributions such as Debian, Fedora. For other distributions, check
-  [repology.org](https://repology.org/project/mopac/packages).
+RegioSQM is a collection of Python scripts and modules organized around
+a `pyproject.toml` file. Its dependencies
+([NumPy](https://pypi.org/project/numpy/),
+[RDKit](https://pypi.org/project/rdkit/),
+[openbabel](https://pypi.org/project/openbabel/)) are most comfortably
+resolved within a virtual environment. Thus, check the release page of
+this repository for a `.whl` of regioSQM (about 20kB). If not present,
+or if the commit history of the main branch of this repository advanced
+vs the publication of a `.whl`, you equally can create a `.whl` on your
+own, for instance by either one of
 
-Because MOPAC's computations typically are *the* overall
-rate-determining step in the course of a prediction, it is recommended
-to run multiple concurrently working instances of MOPAC. For Linux,
-([GNU Parallel](https://www.gnu.org/software/parallel/)) is a suitable
-tool for this.
+``` shell
+python -m build  # see https://pypi.org/project/build/
+uv build  # see https://docs.astral.sh/uv/concepts/projects/build/
+```
 
-As an example, in Linux Debian 13/trixie, branch testing, all essential
-dependencies *of this script* can be resolved by running
+with a copy of this GitHub archive. A third option is to cd into the
+decompressed archive (about 23MB) and run a
 
 ``` shell
 pip install .
 ```
 
-after fetching a copy of the repository from GitHub.
+In an instance of Linux Debian 14/forky (branch testing with
+Python 3.13.14), the size of the supporting virtual environment is about
+285MB.
 
-MOPAC and optional GNU Parallel are external dependencies *for the
-intended analysis*, not for running the script itself.
+## Local use
 
-Alternatively, RDKit may be used in an instance of Anaconda
-(<https://www.anaconda.com/>), independent on an other, already existing
-installation of Python. If just venturing out RegioSQM, the smaller
-installation of Miniconda
-(<https://docs.conda.io/en/latest/miniconda.html>) suffices, too. In
-both cases the missing Python packages are installed by
+The successful installation of regioSQM provides the `regiosqm` command
+to your CLI. This includes a minimal help menu with prompts
+(`regiosqm -h`).
 
-``` shell
-conda install -c conda-forge rdkit openbabel
-```
+1.  preparation of the input file
 
-By default, Miniconda3 (Python 3.8, Linux 64-bit) creates folder
-`/home/USERNAME/miniconda3` to host the new Python interpreter and its
-libraries (339 MB prior, 1.1 GB after the additional installation of
-OpenBabel, RDKit and automatically resolved secondary dependencies like
-numpy) and becomes the automatically activated Python interpreter. To
-disable conda's automatic activation seen in the terminal, issue the
-command
+    Your input file is a list of an alphanumeric identifier of your
+    structure of interest followed by a SMILES string. The two columns
+    are whitespace separated. An example snippet is
 
-``` shell
-conda config --set auto_activate_base false
-```
+    ``` shell
+    benzene c1ccccc1
+    pyridine c1ccncc1
+    comp402  c1c(n(cc1)C1COC1)C=O
+    comp437  c1ccc(o1)Sc1ccccc1
+    comp413  c1ccc(s1)/C=N/N=C/c1sccc1
+    comp1  n1ccc[nH]1
+    ```
 
-You then may toggle between the system's Python interpreter and the one
-by conda with
+    A suggestion is to name this file `input.smi`; however, regioSQM
+    does not constrain you on your choice of file name, nor file
+    extension. Programs like [Avogadro2](https://two.avogadro.cc/) and
+    [OpenBabel](https://github.com/openbabel/openbabel) may help you to
+    obtain, or – by conversion from other files – assign a SMILES string
+    to populate your list.
 
-``` shell
-conda activate   # start working in the conda profile
-conda deactivate  # end working in the conda profile
-```
+2.  generation of conformers
 
-Since RegioSQM release 2.0.0-beta, the scripts are ported to Python 3
-only. The present version of the scripts were tested on \<2023-08-28
-Mon\> in an instance of Linux Debian 13/trixe (branch testing) with
-Python (version 3.11.4), OpenBabel (3.1.1), RDKit (2022.09.3), numpy
-(1.24.2) and MOPAC (v22.0.6 Linux).
+    Presuming an input file by name of `input.smi`, the command
 
-As legacy,
-[release 1.1.1](https://github.com/nbehrnd/RegioSQM/releases/tag/1.1.1)
-is the last set of scripts of RegioSQM known to work both with
-Python 2.7.17, and 2.7.18 (Apr 20, 2020) respectively. This, however,
-equally requires a suitable RDKit [*prior* to release
-2019.3](http://www.rdkit.org/docs/GettingStartedInPython.html), e.g.,
-2018.09.
+    ``` shell
+    regiosqm -g input.smi > conformes.csv
+    ```
 
-## Example of a non-supervised deployment with the moderator script
+    writes for up to 20 confomers per input SMILES string a MOPAC input
+    file (`.mop`). If wanted, this upper threshold can be adjusted (see
+    flag `-c` / `--max_conformations`).
 
-Folder `quick` contains input data and results of a serial prediction on
-36 test substrates from the author's test set. Copy file
-`quick_smiles.csv` – listing the structures to probe as annotated SMILES
-strings – as input file into folder `regiosqm`.[^4] During the scrutiny,
-RegioSQM will generate many files of intermediate use. Thus, to perform
-the the replication with `quick_smiles.csv` successfully, consider 70 MB
-of space freely available. To use the moderator script, a working
-installation of GNU Parallel is mandatory.
+    A typical MOPAC input file generated (here an example about benzene)
+    looks like
 
-Launch the moderator script by
+    ``` shell
+    pm3 charge=1 eps=4.8 cycles=200
 
-``` python
-python3 batch_regiosqm.py quick_smiles.csv
-```
 
-The moderator script will read the structures described in
-`quick_smiles.csv`, create MOPAC input files, and launch the
-computations by MOPAC. To accelerate the overall rate of computation,
-GNU Parallel is used to run up to four, mutually independent, processes.
-OpenBabel and RDKit are again launched to scrutinize MOPAC's results,
-yielding a synoptic text file (`quick_results.csv`) as well as
-individual `.svg` files to highlight the positions predicted as more
-susceptible to the EAS reaction, than the others. Eventually, all data
-relevant to the input file, including the input file itself and a brief
-record about a version information about the tools used
-(`quick_parameters.csv`), are stored in a zip archive bearing the name
-of the input file used.
+    C   1.47640 1  0.40320 1  0.32980 1
+    C   0.58630 1  1.35550 1  0.11090 1
+    C  -0.79350 1  1.02470 1 -0.19620 1
+    C  -1.33460 1 -0.34490 1 -0.29440 1
+    C  -0.23540 1 -1.29390 1 -0.02810 1
+    C   1.00490 1 -0.97140 1  0.24740 1
+    H   2.47770 1  0.69830 1  0.55160 1
+    H   0.88480 1  2.39810 1  0.16000 1
+    H  -1.47920 1  1.86660 1 -0.36680 1
+    H  -1.72440 1 -0.45340 1 -1.33180 1
+    H  -2.12910 1 -0.54760 1  0.45240 1
+    H  -0.47390 1 -2.36820 1 -0.06310 1
+    H   1.74010 1 -1.76710 1  0.42840 1
+    ```
 
-To work on multiple input files, either extend the above instruction in
-a pattern like
+    The setup with a dielectric constant of 4.8 corresponds to
+    chloroform at a temperature of 20 Celsius[^4] (293 K). On your own
+    risk you can change the dielectric constant for instance to 37.3 (as
+    for nitromethane, a value equally compiled by Alfa Chemistry) for
+    instance by
 
-``` python
-python3 batch_regiosqm.py benzene_smiles.csv pyridine_smiles.csv
-```
+    ``` bash
+    sed -i 's/eps=4\.8/eps=37.3/g' *.mop
+    ```
 
-or issue the shorthand
+    File `conformers.csv` tracks the sites to be tested for the
+    electrophilic substitution for every conformer of every input SMILES
+    string provided, e.g.
 
-``` python
-python3 batch_regiosqm.py -a
-```
+    ``` shell
+    name, SMILES, reaction_center, len(conformations)
+    benzene+_1, C1=C[CH+]CC=C1, 0, 1 , charge=1
+    benzene+_2, C1=C[CH+]CC=C1, 5, 1 , charge=1
+    benzene+_3, C1=C[CH+]CC=C1, 1, 1 , charge=1
+    benzene+_4, C1=C[CH+]CC=C1, 2, 1 , charge=1
+    benzene+_5, C1=C[CH+]CC=C1, 3, 1 , charge=1
+    benzene+_6, C1=C[CH+]CC=C1, 4, 1 , charge=1
+    ```
 
-to process *all* files with a file name closing by the pattern of
-`_smiles.csv`. The parameter `-a` is equivalent to `--all`.
+3.  work with MOPAC
 
-To work on a single substrate, expressed by its SMILES string (here,
-about benzene), either one of the two following calls
+    In the overall analysis, especially with larger / more flexible
+    molecules and datasets, the computation with MOPAC is the rate
+    limiting step. Thus, it is recommended to parallelize the work with
+    the `.mop` files. With [GNU
+    Parallel](https://www.gnu.org/software/parallel/) (entry on
+    [repology.org](https://repology.org/project/parallel/packages),
+    example package of [Linux
+    Debian](https://tracker.debian.org/pkg/parallel)), a command like
 
-``` python
-python3 batch_regiosqm.py -s "c1ccncc1"
-python3 batch_regiosqm.py -s 'c1ccccc1C'
-```
+    ``` bash
+    ls *.mop | parallel -j4 "mopac {}"
+    ```
 
-will eventually create archive `special.zip` about this entry's
-prediction *without* prior creation of an input file.
+    runs up to 4 concurrent processes of MOPAC. Depending on the number
+    of CPU cores at your disposition, you may adjust flag `-j` to your
+    preference.
 
-Note, the three options to use the moderator script mutually exclude
-each other.
+    A less efficient sequential run supported by Debian's BASH could be
 
-## Example use without the moderator script
+    ``` bash
+    for file in *.mop
+    do
+        mopac "$file"
+    done
+    ```
 
-This is the approach initially outlined by the authors of RegioSQM and
-offers more flexibility, e.g. regarding the naming of the input file and
-some of the intermediate files.
+    If you work with Windows with access to [Windows
+    git](https://git-scm.com/install/windows) and its Git Bash, the
+    functionally equivalent command would be
 
-- To prepare MOPAC's work invoke OpenBabel and RDKit by
+    ``` shell
+    for file in *.mop; do mopac.exe "$file"; done
+    ```
 
-  ``` shell
-  regiosqm -g example.smiles > example_intermediates.csv
-  ```
+4.  analysis of the results
 
-  to read the structures to be probed, and to *generate* MOPAC input
-  files about the charged regioisomers. The input file, `example.smiles`
-  is a space separated ASCII list in the format of
+    Back in regioSQM, the call of
 
-      comp402  c1c(n(cc1)C1COC1)C=O
-      comp437  c1ccc(o1)Sc1ccccc1
+    ``` bash
+    regiosqm -a input.smi conformers.csv > results.csv
+    ```
 
-  File `example_intermediates.csv` assists RegioSQM's bookkeeping the
-  different regioisomers of the protonated intermediates.
+    analyzes MOPAC's results. Per submitted SMILES string, the tally
+    reports the predictions about an aromatic electrophilic
+    substitution. In the .svg simultaneously generated, green disks
+    highlight the most favorable site(s), red disks somewhat favorable
+    site(s).
 
-- MOPAC's computation is *the* overall rate determining step in
-  RegioSQM's work. Assuming you have access to GNU Parallel,
-
-  ``` shell
-  ls *.mop | parallel -j4 "mopac {}"
-  ```
-
-  distributes the initiate up to four concurrent processes (`-j4`).
-  Adjust this parameter if the computer used has a different number of
-  CPUs at disposition. If MOPAC was not installed in the recommended
-  default directory, equally adjust the pathway accordingly.[^5]
-
-- After completion of MOPAC's computation, the results are *analyzed* by
-  the call of
-
-  ``` shell
-  regiosqm -a example.smiles example_intermediates.csv > results.txt
-  ```
-
-  Based on `example.smiles` and `example_intermediates.csv`, RegioSQM
-  recapitulates the sites predicted as most susceptible to the EAS in
-  `results.txt`, a three column ASCII table in the following format:
-
-      comp402 4 0,4
-      comp437 0 0
-
-  After the name of the compound, the second colon lists the sites
-  predicted as highly susceptible to the EAS reaction. Per input
-  structure, this is the globally most favorable site, and any other
-  site within the 1 kcal/mol threshold. The third column contains the
-  global winning site and any other site within the less strict
-  3 kcal/mol threshold. In case of multiple sites per criterion, the
-  entries are sorted numerically and separated by a comma.
-
-  The analysis equally triggers the individual visual output of the
-  structures as `.svg` files. The site predicted as most favorable to
-  the EAS is highlighted in green. Sites – if any – within the strict
-  1 kcal/mol threshold equally are highlighted in green. Sites – if any
-  – within passing the 3 kcal/mol threshold *only* are highlighted in
-  red.
+Note that the result of the prediction may depend on the usage of MOPAC.
+A more obvious reason is the aforementioned change of the dielectric
+constant, a less obvious one the release of MOPAC used.
 
 ## Extensive check
 
@@ -297,13 +273,13 @@ definitively worse (22) are scattered over multiple EAS classes. For
 
 # Footnotes
 
-[^1]: The implementation of COSMO, the «COnductor-like Screening MOdel»
-    in MOPAC is described in its
-    [manual](http://openmopac.net/manual/cosmo.html). By default,
+[^1]: MOPAC's use of COSMO, the «COnductor-like Screening MOdel» by
+    Klamt and Schüümann is described in MOPAC's
+    [manual](https://openmopac.net/Manual/cosmo.html). By default,
     computations by RegioSQM are performed with MOPAC's implicit
     effective van der Waals radius of the solvent of 1.3  and an
-    explicitly defined dielectric constant of 4.8 (chloroform, script
-    `molecule_formats.py`).
+    explicitly defined dielectric constant of 4.8 (chloroform, see
+    module `molecule_formats.py`, line 62).
 
 [^2]: If your molecule sketcher of choice does not offer the export into
     this format, consider
@@ -312,21 +288,14 @@ definitively worse (22) are scattered over multiple EAS classes. For
     the strings provided by a service like the [PubChem
     Sketcher](https://pubchem.ncbi.nlm.nih.gov/edit3/index.html).
 
-[^3]: The implementation of COSMO, the «COnductor-like Screening MOdel»
-    in MOPAC is described in its
-    [manual](http://openmopac.net/manual/cosmo.html). By default,
+[^3]: MOPAC's use of COSMO, the «COnductor-like Screening MOdel» by
+    Klamt and Schüümann is described in MOPAC's
+    [manual](https://openmopac.net/Manual/cosmo.html). By default,
     computations by RegioSQM are performed with MOPAC's implicit
     effective van der Waals radius of the solvent of 1.3  and an
-    explicitly defined dielectric constant of 4.8 (chloroform, script
-    `molecule_formats.py`).
+    explicitly defined dielectric constant of 4.8 (chloroform, see
+    module `molecule_formats.py`, line 62).
 
-[^4]: If your molecule sketcher of choice does not offer the export into
-    this format, consider
-    [OpenBabel](http://openbabel.org/wiki/Main_Page) for a (batch)
-    conversion of your structure files into this format, or copy-paste
-    the strings provided by a service like the [PubChem
-    Sketcher](https://pubchem.ncbi.nlm.nih.gov/edit3/index.html).
-
-[^5]: For an installation of MOPAC in an other directory than suggested,
-    see [MOPAC's
-    FAQ](http://www.openmopac.net/Manual/trouble_shooting.html#default%20location).
+[^4]: For a compilation of dielectric constants, see for instance the
+    compilation on
+    <https://www.alfa-chemistry.com/resources/table-of-dielectric-constants-of-liquids.html>
