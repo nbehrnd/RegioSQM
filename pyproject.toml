@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "RegioSQM"
-version = "3.0.0-00"
+version = "3.0.0"
 requires-python = ">=3.10"
 authors = [
     { name="Jan Jensen" },
