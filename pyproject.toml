@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "RegioSQM"
-version = "3.0.0"
+version = "3.0.0-00"
 requires-python = ">=3.10"
 authors = [
-    { name="Jan Jensen", email="hjensen@chem.ku.dk" },
+    { name="Jan Jensen" },
     { name="Jimmy Kromann" },
 ]
 maintainers = [
@@ -17,7 +17,9 @@ description = "selectivity prediction of electrophilic substitutions on (hetero)
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-keywords = ["substitution", "selectivity", "prediction", "RDKit", "MOPAC"]
+keywords = ["MOPAC", "openbabel", "RDKit", "synthesis", "substitution",
+    "organic-chemistry", "chemistry", "selectivity", "prediction",
+    "SMILES"]
 
 # https://pypi.org/classifiers/
 classifiers = [
@@ -32,7 +34,11 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Chemistry",
