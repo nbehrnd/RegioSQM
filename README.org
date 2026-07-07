@@ -21,12 +21,6 @@
    computations for individual molecules, expressed by a SMILES
    string.[fn:SMILES]
 
-   With the scripts of this repository, RegioSQM may be used locally.
-   RegioSQM then may be used for the serial prediction about
-   substrates expressed as a list of SMILES strings.  Most of the
-   information provided here is based on the seminal [[https://doi.org/10.1039/C7SC04156J][RegioSQM paper]],
-   an open access publication.
-
 ** Show case
 
    For a given substrate, RegioSQM probes any (hetero)aromatic
@@ -37,7 +31,7 @@
    example,
 
    #+ATTR_LATEX:  :width 6cm
-   [[./docs/figure_1_050.png]]
+   [[https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_1_050.png]]
 
    protonation in the 4-position yields the least endothermic charged
    regioisomer (169.4 kcal/mol, if computed at the level of
@@ -77,7 +71,7 @@
    test set of 535 substrates equals to 92% or 96%.
 
    #+ATTR_LATEX:  :width 6cm
-   [[./docs/figure_4_050.png]]
+   [[https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_4_050.png]]
 
    Data in subfolder =replication= permit a replication of this
    prediction for 535 substrates obtained by permutation of 69 mono-
@@ -85,8 +79,7 @@
    like those depicted below:
 
    #+ATTR_LATEX:  :width 12cm
-   [[./docs/figure_3_050.png]]
-
+   [[https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_3_050.png]]
 
 * Proposed deployment
 

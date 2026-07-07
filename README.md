@@ -26,7 +26,7 @@ For a given substrate, RegioSQM probes any (hetero)aromatic position
 each position, the heat of formation of this intermediate is computed.
 As for pyrazole (**1**, line a), for example,
 
-![](./docs/figure_1_050.png)
+![](https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_1_050.png)
 
 protonation in the 4-position yields the least endothermic charged
 regioisomer (169.4 kcal/mol, if computed at the level of PM3/COSMO)[^3]
@@ -64,14 +64,14 @@ deployed (PM3/COSMO instead of DFT) to predict rapidly the sites of the
 EAS reaction. Depending on the threshold used, the rate of success
 within the test set of 535 substrates equals to 92% or 96%.
 
-![](./docs/figure_4_050.png)
+![](https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_4_050.png)
 
 Data in subfolder `replication` permit a replication of this prediction
 for 535 substrates obtained by permutation of 69 mono- and bicyclic
 (hetero)aromatic core structures with the substituents like those
 depicted below:
 
-![](./docs/figure_3_050.png)
+![](https://raw.githubusercontent.com/nbehrnd/RegioSQM/main/docs/figure_3_050.png)
 
 # Proposed deployment
 
